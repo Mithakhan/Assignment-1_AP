@@ -1,0 +1,38 @@
+import java.util.Date;
+import java.util.concurrent.Semaphore;
+
+class printer{
+    Semaphore semaphore=new Semaphore(2);
+    void print(){
+        try {
+            semaphore.acquire();
+            System.out.println(""+Thread.currentThread().getName()+" at "+new Date());
+            Thread.sleep(2000);
+            semaphore.release();
+        } catch (InterruptedException e) {e.printStackTrace();}
+    }
+}
+
+public class week8_1 {
+
+ public static void main(String[] args) {
+     printer obj=new printer();
+    Thread thread=new Thread(){
+        @Override
+        public void run() {
+            obj.print();
+        }
+    };
+    Thread t0=new Thread(thread);
+    Thread t1=new Thread(thread);
+    Thread t2=new Thread(thread);
+    Thread t3=new Thread(thread);
+
+    t0.start();
+    t1.start();
+    t2.start();
+    t3.start();
+    
+    
+ }   
+}
